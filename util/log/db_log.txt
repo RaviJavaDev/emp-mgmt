@@ -1,0 +1,18 @@
+2021-05-23 23:50:51,422 DEBUG connecting to MongoDB Started
+2021-05-23 23:50:51,608 INFO in save_single_record()
+2021-05-23 23:50:51,608 INFO in get_db()
+2021-05-23 23:50:51,609 INFO out get_db()
+2021-05-23 23:50:51,617 INFO out save_single_record()
+2021-05-23 23:53:13,979 DEBUG connecting to MongoDB Started
+2021-05-23 23:53:14,385 DEBUG connecting to MongoDB Finish
+2021-05-23 23:53:14,385 INFO in save_single_record()
+2021-05-23 23:53:14,385 INFO in get_db()
+2021-05-24 00:00:29,843 DEBUG connecting to MongoDB Started
+2021-05-24 00:00:30,175 DEBUG connecting to MongoDB Finish
+2021-05-24 00:00:30,176 INFO in get_records()
+2021-05-24 00:00:30,176 INFO in get_db()
+2021-05-24 00:00:30,176 INFO in get_db()
+2021-05-24 00:04:04,129 DEBUG connecting to MongoDB Started
+2021-05-24 00:04:04,388 DEBUG connecting to MongoDB Finish
+2021-05-24 00:04:04,388 INFO in get_records()
+2021-05-24 00:04:04,388 INFO in get_db()

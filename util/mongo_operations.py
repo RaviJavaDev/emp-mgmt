@@ -1,6 +1,5 @@
 import pymongo
-import logging
-import os
+from logger.file_logger import FileLogger
 
 
 class MongoOperation:
@@ -10,18 +9,16 @@ class MongoOperation:
 
     def __init__(self):
         try:
-            os.makedirs('log', exist_ok=True)
-            logging.basicConfig(filename=os.path.join(os.getcwd(), 'log', 'db_log.txt'),
-                                level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
-            logging.debug('connecting to MongoDB Started')
+            self.logger = FileLogger()
+            self.logger.debug('connecting to MongoDB Started')
             user_name = 'root'
             password = 'root'
             connection_url = f"mongodb+srv://{user_name}:{password}@projectscluster.2dm5i.mongodb.net/test?retryWrites=true&w=majority"
             self.client = pymongo.MongoClient(connection_url)
             self.db_name = 'emp_mgmt_log_db'
-            logging.debug('connecting to MongoDB Finish')
+            self.logger.debug('connecting to MongoDB Finished')
         except Exception as e:
-            logging.error('Error occurred while connection Mongo Db.', e)
+            self.logger.error(f'Error occurred while connection Mongo Db {e}')
             raise e
 
     def get_db(self):
@@ -30,12 +27,11 @@ class MongoOperation:
 
         :return: db object
         """
-        logging.info('in get_db()')
+        self.logger.info('in get_db()')
         try:
             return self.client[self.db_name]
         except Exception as e:
-            logging.error('Error occurred while getting client.', e)
-        logging.info('out get_db()')
+            self.logger.error(f'Error occurred while getting client {e}')
 
     def save_single_record(self, record, collection_name):
         """
@@ -46,14 +42,14 @@ class MongoOperation:
 
         :return: saved record id
         """
-        logging.info('in save_single_record()')
         try:
+            self.logger.info('in save_single_record()')
             collection = self.get_db()[collection_name]
-            record = collection.insert_one(record)
-            return record
+            record_id = collection.insert_one(record)
+            self.logger.info('out save_single_record()')
+            return record_id
         except Exception as e:
-            logging.error('Error occurred while saving single record.', e)
-        logging.info('out save_single_record()')
+            self.logger.error(f'Error occurred while saving single record {e}')
 
     def save_multiple_records(self, records, collection_name):
         """
@@ -64,32 +60,34 @@ class MongoOperation:
 
         :return: saved record id
         """
-        logging.info('in save_multiple_records()')
+
         try:
+            self.logger.info('in save_multiple_records()')
             collection = self.get_db()[collection_name]
-            record = collection.insert_many(records)
-            return record
+            record_ids = collection.insert_many(records)
+            self.logger.info('out save_multiple_records()')
+            return record_ids
         except Exception as e:
-            logging.error('Error occurred while saving multiple records.', e)
-        logging.info('out save_multiple_records()')
+            self.logger.error(f'Error occurred while saving multiple records {e}')
 
     def get_record(self, collection_name, filter):
         """
         This method returns single record.
 
         :param collection_name:
-        :param filer:
+        :param filter:
 
         :return: record
         """
-        logging.info('in get_record()')
+
         try:
+            self.logger.info('in get_record()')
             collection = self.get_db()[collection_name]
             record = collection.find_one(filter)
+            self.logger.info('in get_record()')
             return record
         except Exception as e:
-            logging.error('Error occurred while getting records.', e)
-        logging.info('in get_record()')
+            self.logger.error(f'Error occurred while getting records {e}')
 
     def get_records(self, collection_name):
         """
@@ -99,14 +97,15 @@ class MongoOperation:
 
         :return:list of record
         """
-        logging.info('in get_records()')
+
         try:
+            self.logger.info('in get_records()')
             collection = self.get_db()[collection_name]
             records = collection.find()
+            self.logger.info('out get_records()')
             return records
         except Exception as e:
-            logging.error('Error occurred while getting record.', e)
-        logging.info('in get_records()')
+            self.logger.error(f'Error occurred while getting record {e}')
 
 
 if __name__ == '__main__':

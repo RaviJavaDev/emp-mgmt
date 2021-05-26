@@ -20,9 +20,9 @@ def create_db():
             db = request.json['db']
             emp_mgmt = EmployeeMgmt(transaction_id, db)
             emp_mgmt.create_database(db_name)
+        return jsonify({'Status': 'SUCCESS', 'message': f'Database {db_name} created successfully.'})
     except Exception as e:
         return jsonify({'Status': 'FAILURE', 'message': f'FAILURE: {e}'})
-    return jsonify({'Status': 'SUCCESS', 'message': f'Database {db_name} created successfully.'})
 
 
 @app.route('/create-table', methods=['POST'])
@@ -36,9 +36,9 @@ def create_table():
             db = request.json['db']
             emp_mgmt = EmployeeMgmt(transaction_id, db)
             emp_mgmt.create_table(db_name, table_name, columns)
+        return jsonify({'Status': 'SUCCESS', 'message': f'Table {table_name} created successfully.'})
     except Exception as e:
         return jsonify({'Status': 'FAILURE', 'message': f'FAILURE: {e}'})
-    return jsonify({'Status': 'SUCCESS', 'message': f'Table {table_name} created successfully.'})
 
 
 @app.route('/save-record', methods=['POST'])
@@ -56,9 +56,9 @@ def save_emp():
             dct_obj = request.json['dct_obj']
             emp_mgmt = EmployeeMgmt(transaction_id, db)
             emp_mgmt.save_employee(db_name, table_name, dct_obj)
+        return jsonify({'Status': 'SUCCESS', 'message': 'Record saved successfully.'})
     except Exception as e:
         return jsonify({'Status': 'FAILURE', 'message': f'FAILURE: {e}'})
-    return jsonify({'Status': 'SUCCESS', 'message': 'Record saved successfully.'})
 
 
 @app.route('/get-record-by-id', methods=['POST'])
@@ -76,9 +76,9 @@ def get_emp_by_id():
             _id = request.json['_id']
             emp_mgmt = EmployeeMgmt(transaction_id, db)
             records = emp_mgmt.get_employee_by_id(db_name, table_name, _id)
+        return jsonify({'Status': 'SUCCESS', 'data': records})
     except Exception as e:
         return jsonify({'Status': 'FAILURE', 'message': f'FAILURE: {e}'})
-    return jsonify({'Status': 'SUCCESS', 'data': records})
 
 
 @app.route('/get-all-records', methods=['POST'])
@@ -95,9 +95,9 @@ def get_all_emp():
             db = request.json['db']
             emp_mgmt = EmployeeMgmt(transaction_id, db)
             records = emp_mgmt.get_all_employee(db_name, table_name)
+        return jsonify({'Status': 'SUCCESS', 'data': records})
     except Exception as e:
         return jsonify({'Status': 'FAILURE', 'message': f'FAILURE: {e}'})
-    return jsonify({'Status': 'SUCCESS', 'data': records})
 
 
 if __name__ == '__main__':
